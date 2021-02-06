@@ -5,8 +5,8 @@ references, and documentation will be added at a later date.
 
 ---
 
-## Adding new files to the directory
-When adding new files, first get them all setup in the home directory (or 
+## Adding new files/folders to the directory
+When adding new files/folders, first get them all setup in the home directory (or 
 intended config directory.)
 Once that's done, you'll want to move it to the dotfiles directory and make a 
 symlink for it. You can do it like so :
@@ -32,4 +32,14 @@ than the starting 3.
 - .sterminalrc
 - .vimrc
 - .zshrc
+- .p10k.zsh
+
+
+---
+
+## Dotfile Directories
+These directories contain the configs and plugins to certain core dotfiles. Such as configs and plugins for vim and zsh.
+
+- .vim
+- .oh-my-zsh
 
