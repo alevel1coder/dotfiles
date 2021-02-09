@@ -43,3 +43,30 @@ These directories contain the configs and plugins to certain core dotfiles. Such
 - .vim
 - .oh-my-zsh
 
+
+---
+
+## Plugin install scripts
+Some plugins need manual installations, or I haven't fully automated their install process yet. To keep things simple,
+I'm adding their commands to this doc for safe-keeping
+
+### ZSH and OH MY ZSH 
+
+- zsh-syntax-highliting
+
+```
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+- zsh-autosuggestions
+
+```
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+- powerlevel10k for OH MY ZSH
+
+```
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
