@@ -31,10 +31,12 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'prettier/vim-prettier', { 'do': 'npm install'  }
 
+
 " Javascript and React tools
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'leafgarland/typescript-vim'
+Plug 'othree/yajs.vim'
 
 " General tools
 Plug 'vim-utils/vim-man'
@@ -71,14 +73,15 @@ set smartindent
 " Show line numbers
 set nu
 set ruler
-
-" Don't make the vim swap files
-set noswapfile
+set signcolumn=yes
+set guicursor=n-v-c:block-Cursor
 
 " No backups and better undo
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
+set noswapfile
+set hidden
 
 " Better searching
 set incsearch
@@ -93,23 +96,47 @@ set nowrap
 " Turn on syntax
 syntax on
 
+" scroll the file when you hit X lines away from bottom/top
+set scrolloff=8
+
+" Display hidden characters
+set list
+set listchars=tab:•\ ,trail:•,extends:»,precedes:«
+
+" Give more space for displaying messages
+set cmdheight=2
+
+" Having longer updatetime (default is 4000ms = 4s) leads to
+" noticable delays and poor user experience
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|
+set shortmess+=c
+
+
+
+" ----VISUAL STUFF----
 " Set some themeing options like colorscheme and background colors
 set t_Co=256
 set t_ut=
 colorscheme nord
-" set background=dark
+" Manual color overrides
+highlight Character cterm=NONE ctermfg=044
+highlight String cterm=NONE ctermfg=044
+highlight Number cterm=NONE ctermfg=117
+highlight Float cterm=NONE ctermfg=117
+highlight Type cterm=NONE ctermfg=105
+highlight Function cterm=NONE ctermfg=141
+highlight Statement cterm=NONE ctermfg=147
+highlight PreProc cterm=None ctermfg=075
 
 " Add a column 80 characters in if it is a python file
 autocmd FileType python set colorcolumn=80 highlight ColorColumn ctermbg=darkgrey guibg=lightgrey
 
 " Set highlight options
-highlight Visual ctermbg=darkgreen
-highlight Comment ctermfg=darkgrey 
-
-" Display hidden characters
-" set list
-" set listchars=tab:•\ ,trail:•,extends:»,precedes:«
-
+highlight Visual ctermbg=239
+highlight Comment ctermfg=243
+highlight MatchParen term=reverse ctermfg=white ctermbg=darkgreen
 
 "
 " ---------------------------------------------------------------------------
@@ -126,7 +153,7 @@ let $FZF_DEFAULT_OPTS='--reverse'
 
 "                           ------- Airline -------
 let g:airline#extensions#coc#enabled=1
-
+let g:airline_theme='bubblegum'
 
 "
 " ----------------------------------------------------------------------------
@@ -146,4 +173,59 @@ map <leader>l :wincmd l<CR>
 " For simple sizing of splits.
 map - <C-W>-
 map + <C-W>+
+
+
+"                        -------- CoC Remaps --------
+" Use TAB for trigger completion with characters ahead and navigate
+noremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+
+function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion
+inoremap <silent><expr> <c-@> coc#refresh()
+
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+map <silent> gd <Plug>(coc-definition)
+map <silent> gy <Plug>(coc-type-definition)
+map <silent> gi <Plug>(coc-implementation)
+map <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+
+function! s:show_documentation()
+    if (index(['vim', 'help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+    else
+        execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+endfunction
+
+" Highlight the symbol and it's references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming
+nmap <leader>rn <Plug>(coc-rename)
 
