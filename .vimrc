@@ -33,8 +33,8 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install'  }
 
 
 " Javascript and React tools
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
+"Plug 'yuezk/vim-js'
+"Plug 'maxmellon/vim-jsx-pretty'
 Plug 'leafgarland/typescript-vim'
 Plug 'othree/yajs.vim'
 
@@ -42,6 +42,7 @@ Plug 'othree/yajs.vim'
 Plug 'vim-utils/vim-man'
 Plug 'mbbill/undotree'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 
 " Git and task management tools
 Plug 'tpope/vim-fugitive'
@@ -131,7 +132,8 @@ highlight Statement cterm=NONE ctermfg=147
 highlight PreProc cterm=None ctermfg=075
 
 " Add a column 80 characters in if it is a python file
-autocmd FileType python set colorcolumn=80 highlight ColorColumn ctermbg=darkgrey guibg=lightgrey
+autocmd FileType python set colorcolumn=80
+autocmd FileType python highlight ColorColumn ctermbg=darkgrey guibg=lightgrey
 
 " Set highlight options
 highlight Visual ctermbg=239
