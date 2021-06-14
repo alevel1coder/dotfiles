@@ -30,7 +30,8 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 alias rs="rsync -arvguzL --stats --progress"
-alias activate="source .venv/bin/activate"
+alias va="source .venv/bin/activate"
+alias ve="python3 -m venv .venv"
 
 # alias for yarn if it complains about node and nodejs
 # alias node=nodejs
